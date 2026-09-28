@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Perfil de Viagens{% endblock %}</title>
+    
+    <!-- Link para o CSS principal -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header>
+        <h1>✈️ Meu Perfil de Viagens</h1>
+        {% if session.get('usuario_logado') %}
+            <nav>
+                <span>Olá, {{ session.get('nome_usuario') }}</span>
+                <a href="{{ url_for('auth.logout') }}">Sair</a>
+            </nav>
+        {% endif %}
+    </header>
+
+    <main>
+        <div class="card">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Perfil de Viagens - Planejamento & Roteiro</p>
+    </footer>
+
+</body>
+</html>

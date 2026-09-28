@@ -1,0 +1,155 @@
+/* --- RESET E ESTRUTURA GLOBAL --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #212529;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- CABEÇALHO / NAVBAR --- */
+header {
+    background-color: #0d47a1; /* Azul forte */
+    color: #ffffff;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+header nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+header nav a:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* --- CONTAINER PRINCIPAL CENTRALIZADO --- */
+main {
+    flex: 1; /* Ocupa todo o espaço vertical disponível entre header e footer */
+    display: flex;
+    justify-content: center; /* Centraliza na HORIZONTAL */
+    align-items: center;     /* Centraliza na VERTICAL */
+    padding: 1.5rem;
+}
+
+/* --- CARD DO FORMULÁRIO / CONTEÚDO --- */
+.card {
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 400px; /* Mantém uma largura bonita para desktop */
+    border-top: 5px solid #0d47a1;
+}
+
+.card h2 {
+    color: #0d47a1;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+/* --- FORMULÁRIOS E INPUTS --- */
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus {
+    border-color: #0d47a1;
+    box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.2);
+}
+
+/* --- BOTÕES --- */
+.btn {
+    display: inline-block;
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #0d47a1; /* Azul forte */
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.btn:hover {
+    background-color: #002171; /* Azul ainda mais escuro ao passar o mouse */
+}
+
+/* --- ALERTAS E MENSAGENS --- */
+.alert {
+    padding: 0.75rem 1rem;
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+    border-radius: 6px;
+    margin-bottom: 1.2rem;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* --- RODAPÉ --- */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #ffffff;
+    color: #6c757d;
+    font-size: 0.85rem;
+    border-top: 1px solid #e9ecef;
+}
