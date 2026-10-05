@@ -135,13 +135,25 @@ main {
 /* --- ALERTAS E MENSAGENS --- */
 .alert {
     padding: 0.75rem 1rem;
-    background-color: #ffebee;
-    color: #c62828;
-    border: 1px solid #ffcdd2;
     border-radius: 6px;
     margin-bottom: 1.2rem;
     font-size: 0.9rem;
     text-align: center;
+    font-weight: 500;
+}
+
+/* VERMELHO: Mensagens de erro ou erro no login */
+.alert-danger {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+}
+
+/* VERDE: Mensagens de sucesso ou cadastro realizado */
+.alert-success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
 }
 
 /* --- RODAPÉ --- */
