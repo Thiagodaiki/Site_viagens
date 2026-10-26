@@ -1,0 +1,1 @@
+from app.controllers.auth import auth_bp
