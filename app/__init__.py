@@ -1,9 +1,10 @@
 import os
 from flask import Flask
 from dotenv import load_dotenv
-from app.database import db, init_db
+from app.database import init_db
 from app.middlewares.middleware import verificar_autenticacao
 from app.controllers.auth import auth_bp
+from app.controllers.planos import plano_bp
 
 load_dotenv()
 
@@ -15,25 +16,19 @@ def create_app():
     app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'chave_dev_fallback')
 
-    # Inicializa o SQLite
-    init_db(app)
+    # Inicializa o banco de dados e cria a tabela via DatabaseConnection
+    init_db()
 
-    # Importa o modelo para que o SQLAlchemy reconheça as tabelas
+    # Bloco opcional para criar um usuário de teste se o banco estiver vazio
     from app.models.usuario import Usuario
-
-    with app.app_context():
-        # Cria o arquivo perfil_viagens.db e a tabela 'usuarios' se não existirem
-        db.create_all()
-
-        # Cria um usuário de teste inicial se o banco estiver vazio
-        if not Usuario.buscar_por_username('viajante1'):
-            Usuario.criar_usuario(
-                username='viajante1',
-                nome='Carlos Silva',
-                password='senha123'
-            )
+    if not Usuario.buscar_por_username('viajante1'):
+        Usuario.criar_usuario(
+            username='viajante1',
+            nome='Carlos Silva',
+            password='senha123'
+        )
 
     app.before_request(verificar_autenticacao)
     app.register_blueprint(auth_bp)
-
+    app.register_blueprint(plano_bp)
     return app

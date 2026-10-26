@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from app.models.usuario import Usuario
-
+from app.models.plano import Plano
 auth_bp = Blueprint('auth', __name__)
 
 
@@ -75,7 +75,13 @@ def register():
 @auth_bp.route('/dashboard')
 def dashboard():
     """Rota protegida para exibir a área logada."""
-    return render_template('dashboard.html', nome=session.get('nome_usuario'))
+    username = session.get('usuario_logado')
+    usuario = Usuario.buscar_por_username(username)
+    
+    # Busca os planos criados por este usuário para exibir na tela se quiser
+    planos = Plano.buscar_por_usuario(usuario.id) if usuario else []
+    
+    return render_template('dashboard.html', nome=session.get('nome_usuario'), planos=planos)
 
 
 @auth_bp.route('/logout')
