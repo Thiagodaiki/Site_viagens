@@ -1,43 +1,175 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Perfil de Viagens{% endblock %}</title>
-    
-    <!-- Link para o CSS principal -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
+    <title>{% block title %}Portal de Viagens{% endblock %}</title>
+    <style>
+        :root {
+            --bg-body: #f0f2f5;
+            --bg-container: #ffffff;
+            --bg-secao: #fafafa;
+            --bg-input: #ffffff;
+            --text-main: #333333;
+            --text-muted: #555555;
+            --border-color: #e0e0e0;
+            --primary-color: #0d47a1;
+            --header-bg: #0d47a1;
+        }
 
+        body.dark-mode {
+            --bg-body: #121212;
+            --bg-container: #1e1e1e;
+            --bg-secao: #252525;
+            --bg-input: #2c2c2c;
+            --text-main: #e0e0e0;
+            --text-muted: #b0b0b0;
+            --border-color: #383838;
+            --primary-color: #64b5f6;
+            --header-bg: #0a2540;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.25s, color 0.25s;
+        }
+        header {
+            background-color: var(--header-bg);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        header h1 {
+            font-size: 1.4rem;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        header a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            background: rgba(255,255,255,0.15);
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        header a:hover {
+            background: rgba(255,255,255,0.25);
+        }
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 2rem auto;
+            background: var(--bg-container);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            flex: 1;
+        }
+        /* Estilos para formulários */
+        .form-box {
+            max-width: 500px;
+            margin: 1rem auto;
+        }
+        .form-box h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--bg-input);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 0.85rem;
+            background-color: #0d47a1;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #1565c0;
+        }
+        .alert {
+            padding: 0.85rem 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        .alert-success { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+        .alert-danger  { background-color: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+        .alert-warning { background-color: #fff8e1; color: #f57f17; border: 1px solid #ffecb3; }
+    </style>
+</head>
+<body class="{% if session.get('dark_mode') %}dark-mode{% endif %}">
     <header>
-        <h1>✈️ Meu Perfil de Viagens</h1>
-        {% if session.get('usuario_logado') %}
-            <nav>
-                <span>Olá, {{ session.get('nome_usuario') }}</span>
+        <h1>✈️ Sistema de Planejamento de Viagens</h1>
+        <div class="header-actions">
+            <a href="{{ url_for('plano.alternar_tema') }}">
+                {% if session.get('dark_mode') %}☀️ Modo Claro{% else %}🌙 Modo Escuro{% endif %}
+            </a>
+
+            {% if session.get('usuario_logado') %}
+                <span>Olá, <strong>{{ session.get('nome_usuario') }}</strong></span>
                 <a href="{{ url_for('auth.logout') }}">Sair</a>
-            </nav>
-        {% endif %}
+            {% endif %}
+        </div>
     </header>
 
-    <main>
-        <div class="card">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <!-- A classe CSS será 'alert alert-success' ou 'alert alert-danger' -->
-                <div class="alert alert-{{ category }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
 
-    {% block content %}{% endblock %}
-</div>  
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Perfil de Viagens - Planejamento & Roteiro</p>
-    </footer>
-
+        {% block content %}{% endblock %}
+    </div>
 </body>
 </html>

@@ -3,6 +3,8 @@
 {% block title %}Cadastro - Perfil de Viagens{% endblock %}
 
 {% block content %}
+<div class="form-box">
+
 <h2>Criar Conta</h2>
 
 <form method="POST" action="{{ url_for('auth.register') }}">
@@ -32,4 +34,6 @@
 <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem;">
     Já tem uma conta? <a href="{{ url_for('auth.login') }}" style="color: #0d47a1; font-weight: bold;">Faça Login</a>
 </p>
+</div>
+
 {% endblock %}

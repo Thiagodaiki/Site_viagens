@@ -67,3 +67,16 @@ def init_db(app=None):
                 FOREIGN KEY (usuario_id) REFERENCES usuarios (id)
             );
         """)
+        # Tabela de pacotes públicos criados pelos usuários
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS pacotes (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                usuario_id INTEGER NOT NULL,
+                titulo TEXT NOT NULL,
+                destino TEXT NOT NULL,
+                duracao_dias INTEGER NOT NULL,
+                preco REAL NOT NULL,
+                descricao TEXT NOT NULL,
+                FOREIGN KEY (usuario_id) REFERENCES usuarios (id)
+            );
+        """)

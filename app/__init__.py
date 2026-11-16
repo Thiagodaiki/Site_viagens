@@ -5,7 +5,7 @@ from app.database import init_db
 from app.middlewares.middleware import verificar_autenticacao
 from app.controllers.auth import auth_bp
 from app.controllers.planos import plano_bp
-
+from app.controllers.pacotes import pacote_bp
 load_dotenv()
 
 def create_app():
@@ -31,4 +31,5 @@ def create_app():
     app.before_request(verificar_autenticacao)
     app.register_blueprint(auth_bp)
     app.register_blueprint(plano_bp)
+    app.register_blueprint(pacote_bp)
     return app

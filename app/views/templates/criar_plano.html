@@ -3,6 +3,8 @@
 {% block title %}Criar Plano de Viagem{% endblock %}
 
 {% block content %}
+<div class="form-box">
+
 <h2>Planejar Nova Viagem</h2>
 
 <form method="POST" action="{{ url_for('plano.criar_plano') }}">
@@ -41,6 +43,7 @@
 </form>
 
 <p style="text-align: center; margin-top: 1rem;">
-    <a href="{{ url_for('auth.dashboard') }}" style="color: #0d47a1; font-weight: bold; text-decoration: none;">Voltar ao Dashboard</a>
+    <a href="{{ url_for('plano.dashboard') }}" style="color: #0d47a1; font-weight: bold; text-decoration: none;">Voltar ao Dashboard</a>
 </p>
+</div>
 {% endblock %}
